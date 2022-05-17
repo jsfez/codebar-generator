@@ -4,15 +4,6 @@ import { useJsBarcodeEan13 } from './components/Barcode'
 import { PageContainer } from './components/PageContainer'
 import { Input } from './components/Input'
 import { Label } from './components/Label'
-import { Button } from './components/Button'
-
-async function handleClick() {
-  document.querySelector('#barcode').toBlob(function (blob) {
-    // eslint-disable-next-line no-undef
-    const item = new ClipboardItem({ 'image/png': blob })
-    navigator.clipboard.write([item])
-  })
-}
 
 export function Home() {
   const [ean13, setEan13] = useState('')
@@ -45,10 +36,6 @@ export function Home() {
             onChange={onInputChange}
           />
         </Label>
-
-        <Button onClick={handleClick} disabled={ean13?.length !== 13 || error}>
-          Copier le barcode
-        </Button>
       </x.div>
 
       <x.div textAlign="center" mt={4} h={40} p={3} w={1}>
@@ -58,7 +45,7 @@ export function Home() {
             <x.span color="red">code invalide</x.span>
           </p>
         ) : ean13.length === 13 ? (
-          <canvas id="barcode"></canvas>
+          <img id="barcode" alt="generated-barcode" />
         ) : (
           <p>
             Remplissez le champ avec 13 chiffres pour générer le code barre.
